@@ -1,0 +1,86 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+class Advise
+{
++X: numpy array
++Y: numpy array
++le: LabelEncoder
++scaler: MinMaxScaler
++model
+-convert(str)
++features_engineering(numpy array)
++teach([model])
++advise(numpy array)
+-find_best(list[model])
+}
+
+class HollandTest
+{
+-questions: list[list[str]]
+-test_keys: list[list[str]]
++get_result(dict[int, str])
+}
+
+class SubjectsProfilesConverter {
++subjects: dict[str, str]
++profiles: dict[str, str]
++to_subjects(list[str])
++to_profiles(list[str])
+}
+
+class AdviseController {
++advisor: Advise
++render_page()
++advise_he()
+}
+AdviseController ..> Advise: <<use>>
+
+class HomeController {
++tc: TestController
++sc: SubjectController
++pc: ProfileController
++render_page()
++pass_test()
++select_profiles()
++select_subjects()
+}
+HomeController ..> TestController: <<use>>
+HomeController ..> SubjectController: <<use>>
+HomeController ..> ProfileController: <<use>>
+
+class TestController {
++path: str
++holland_test: HollandTest
++render_page()
++get_test_result()
++advise_he()
+}
+TestController ..> HollandTest: <<use>>
+
+
+class SubjectController {
++converter: SubjectsProfilesController
++render_page()
++advise_he()
+}
+SubjectController ..> SubjectsProfilesController: <<use>>
+
+AdviseController <|-- TestController
+AdviseController <|-- SubjectController
+AdviseController <|-- ProfileController
+
+
+class ProfileController {
++render_page()
++advise_he()
+}
+
+class SubjectsProfilesController {
+converter: SubjectsProfilesConverter
++render_page()
++accord()
+}
+SubjectsProfilesController ..> SubjectsProfilesConverter: <<use>>
+@enduml

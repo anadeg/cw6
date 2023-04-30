@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Result</title>
+    <style>
+        .centered {
+            text-align: center;
+                    }
+        button {
+            position: absolute;
+            bottom: 10px;
+            left:50%;
+            margin-left: -100px;
+
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 12px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            width: 200px;
+            transition-duration: 0.3s;
+                    }
+        button:hover {
+	        background: rgba(0,0,0,0);
+	        color: #4CAF50;
+	        box-shadow: inset 0 0 0 2px #4CAF50;
+                    }
+        a:link {
+            color: black;
+            text-decoration: none;
+        }
+        a:visited {
+            color: black;
+            text-decoration: underline;
+        }
+        input[type=submit] {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 3px 5px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            width: 100px;
+            transition-duration: 0.3s;
+        }
+        input[type=submit]:hover {
+	        background: rgba(0,0,0,0);
+	        color: #4CAF50;
+	        box-shadow: inset 0 0 0 2px #4CAF50;
+        }
+        input[type=text], input[type=text]:hover {
+            background: rgba(0,0,0,0);
+            width: 200px;
+            border: solid green 2px;
+    </style>
+</head>
+<body>
+    <div class="centered">
+        <h3>Test result: {{ result }}</h3>
+        <br>
+        {% for prof in profiles %}
+            {{ prof }}
+            <br>
+        {% endfor %}
+        <br>
+        <br>
+        <button>
+          <a href="{% url 'dorm_city' %}">Advise by Test Result</a>
+        </button>
+    <br>
+    </div>
+
+</body>
+</html>

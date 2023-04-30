@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+actor User
+HomeController -> HomeController: render_page
+HomeController --> HomeController
+
+User -> HomeController: нажимает кнопку \nдля прохождения теста
+HomeController -> TestController: pass_test
+HomeController <-- TestController:
+User <-- HomeController
+
+User -> TestController: проходит тест
+TestController -> HollandTest: get_result
+HollandTest -> HollandTest: get_result
+HollandTest --> HollandTest
+TestController <-- HollandTest
+User <-- TestController
+@enduml

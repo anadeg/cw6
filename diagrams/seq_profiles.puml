@@ -1,0 +1,21 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+actor User
+HomeController -> HomeController: render_page
+HomeController --> HomeController
+
+User -> HomeController: нажимает кнопку \nдля выбора профилей
+HomeController -> ProfileController: select_profiles
+ProfileController -> ProfileController: render_page
+ProfileController --> ProfileController
+User <-- ProfileController
+
+User -> ProfileController: выбирает профили
+ProfileController -> Advise: advise_he
+Advise -> Advise: advise_he
+Advise --> Advise
+ProfileController <-- Advise
+User <-- ProfileController
+
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+actor User
+HomeController -> HomeController: render_page
+HomeController --> HomeController
+
+User -> HomeController: нажимает кнопку \nдля выбора предметов
+HomeController -> SubjectController: select_subjects
+SubjectController -> SubjectController: render_page
+SubjectController --> SubjectController
+User <-- SubjectController
+
+User -> SubjectController: выбирает предметы
+SubjectController -> SubjectConverter: advise_he
+SubjectConverter -> SubjectConverter: to_profiles
+SubjectConverter --> SubjectConverter
+SubjectController <-- SubjectConverter
+SubjectController -> Advise
+Advise -> Advise: advise
+Advise --> Advise
+SubjectController <-- Advise
+User <-- SubjectController
+@enduml

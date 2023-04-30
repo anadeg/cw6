@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Advise Result</title>
+    <style>
+        .centered {
+            text-align: center;
+                    }
+        button {
+            position: absolute;
+            bottom: 10px;
+            left:50%;
+            margin-left: -100px;
+
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 12px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            width: 200px;
+            transition-duration: 0.3s;
+                    }
+        button:hover {
+	        background: rgba(0,0,0,0);
+	        color: #4CAF50;
+	        box-shadow: inset 0 0 0 3px #4CAF50;
+                    }
+        a:link {
+            color: black;
+            text-decoration: none;
+        }
+        a:visited {
+            color: black;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="centered">
+        <h1>Возможно, Вам подойдет</h1>
+        <h2>{{ he }}</h2>
+        <h3>Точность - {{ accuracy }}%</h3>
+
+        <br>
+        <button name="home"><a href="{% url 'home' %}">На главную</a></button>
+    </div>
+</body>
+</html>
