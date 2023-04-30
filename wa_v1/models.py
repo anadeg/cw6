@@ -42,6 +42,45 @@ PHYS_CULT = "phys_cult"
 ECON = "econ"
 LAW = "law"
 
+R_TRANS = {
+    PHYSICS: "физика",
+    MATH: "математика",
+    CHEM: "химия",
+    BIO: "биология",
+    SOC_SCI: "обществоведение",
+    FOREIGN: "иностранный язык",
+    GEO: "география",
+    HIST_BEL: "история Беларуси",
+    HIST_W: "всемирная история",
+    ART: "творческий экзамен",
+
+    AVIA: "авиация",
+    VET: "ветеринария",
+    WAR: "военное дело",
+    DESIGN: "дизайн",
+    JOURN: "журналистика",
+    ENGIN: "инженерия",
+    IT: "информационные технологии",
+    HIST: "история",
+    FOREST: "лесное хозяйство",
+    LINGO: "лингвистика",
+    MED: "медицина",
+    INT_COM: "международные отношения",
+    MUSIC: "музыка",
+    TEACH: "преподавание",
+    PSY: "психология",
+    COM: "связь",
+    AGRI: "сельское хозяйство",
+    SS: "социальные науки",
+    THEO: "теология",
+    TECHN: "техника",
+    TECHNL: "технология",
+    TOURISM: "туризм",
+    PHYS_CULT: "физическая культура",
+    ECON: "экономика",
+    LAW: "юридическое дело"
+}
+
 
 class HollandTest:
     questions = [
@@ -244,19 +283,6 @@ class SubjectsProfilesConverter:
         PHYSICS, MATH, CHEM, BIO, SOC_SCI, FOREIGN, GEO, HIST_BEL, HIST_W, ART
     }
 
-    subjects_russian = {
-        PHYSICS: "физика",
-        MATH: "",
-        CHEM: "",
-        BIO: "",
-        SOC_SCI: "",
-        FOREIGN: "",
-        GEO: "",
-        HIST_BEL: "",
-        HIST_W: "",
-        ART: ""
-    }
-
     profiles = {AVIA, BIO, VET, WAR,
                 GEO, DESIGN, JOURN, ENGIN,
                 IT, ART, HIST, FOREST,
@@ -322,6 +348,17 @@ class SubjectsProfilesConverter:
 
         return result
 
+    def to_russian(self, dct):
+        result = dict()
+
+        for key, values in dct.items():
+            k = R_TRANS[key]
+            vals = [R_TRANS[v] for v in values]
+
+            result[k] = vals
+
+        return result
+
 
 class AdviseController:
     advisor = Advise()
@@ -342,14 +379,25 @@ class TestController(AdviseController):
 
     spc = SubjectsProfilesConverter()
 
-    def reset(self):
-        self.answers = []
-        self.passed_questions = -1
-        self.profiles = None
+    @staticmethod
+    def reset():
+        TestController.answers = []
+        TestController.passed_questions = -1
+        TestController.profiles = None
+
+    @staticmethod
+    def render_preamble(request, *args, **kwargs):
+        TestController.reset()
+
+        return render(request,
+                      os.path.join('preamble.html'),
+                      {})
 
     @staticmethod
     def render_page(request, *args, **kwargs):
-        if TestController.passed_questions == 2:
+
+        if TestController.passed_questions == 41:
+            # TestController.reset()
             return TestController.get_test_result(request, args, kwargs)
 
         answer = request.POST.get('preferred') or None
@@ -372,8 +420,10 @@ class TestController(AdviseController):
     def get_test_result(request, *args, **kwargs):
         ans = TestController.answers[1:]
 
-        user_type, profiles = TestController.holland_test.get_result(ans)
-        TestController.profiles = profiles
+        user_type, profiles_en = TestController.holland_test.get_result(ans)
+        TestController.profiles = profiles_en
+
+        profiles = [R_TRANS[pr] for pr in profiles_en]
 
         return render(request,
                       os.path.join('test_result_page.html'),
@@ -412,7 +462,7 @@ class SubjectController(AdviseController):
     def advise_he(self, request, *args, **kwargs):
         preferred = request.POST.getlist('preferred')
 
-        _, preferred = self.spc.to_profiles(preferred)
+        preferred = self.spc.to_profiles(preferred)
 
         context = {profile: [(1 if profile in preferred else None)] for profile in self.spc.profiles}
         context.update({"region": request.POST.get('region'),
@@ -440,8 +490,14 @@ class ProfileController(AdviseController):
         subj = request.POST.getlist('subj') or []
         profs = request.POST.getlist('profs') or []
 
-        subj_to_profs = ProfileController.spc.to_profiles(subj)
-        profs_to_subj = ProfileController.spc.to_subjects(profs)
+        subj_to_profs_en = ProfileController.spc.to_profiles(subj)
+        profs_to_subj_en = ProfileController.spc.to_subjects(profs)
+
+        subj_to_profs = ProfileController.spc.to_russian(subj_to_profs_en)
+        profs_to_subj = ProfileController.spc.to_russian(profs_to_subj_en)
+
+        ProfileController.join_list(subj_to_profs)
+        ProfileController.join_list(profs_to_subj)
 
         return render(request,
                       os.path.join('convertion.html'),
@@ -464,6 +520,11 @@ class ProfileController(AdviseController):
                       {"accuracy": accuracy,
                        "he": result})
 
+    @staticmethod
+    def join_list(dct):
+        for key, values in dct.items():
+            dct[key] = ",\n".join(values)
+
 
 class HomeController:
     tc = TestController()
@@ -477,7 +538,7 @@ class HomeController:
                       {})
 
     def pass_test(self, request, *args, **kwargs):
-        HomeController.tc.reset()
+        # HomeController.tc.reset()
         return self.tc.render_page(request,
                                    *args,
                                    **kwargs)

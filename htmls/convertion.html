@@ -59,15 +59,15 @@
 
         button {
             text-color: #446445;
-            background-color: #B0E6B2;
+            background-color:#4CAF50;
             border: none;
             color: white;
-            padding: 6px 8px;
+            padding: 12px 16px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
             font-size: 14px;
-            width: 350px;
+            width: 200px;
             transition-duration: 0.3s;
                     }
         button:hover {
@@ -87,9 +87,15 @@
             justify-content: center;
             align-items: center;
         }
+
+        .center {
+              margin-left: auto;
+              margin-right: auto;
+        }
     </style>
 </head>
 <body>
+    {% include 'navbar.html' %}
     <br>
     <br>
     <br>
@@ -204,15 +210,18 @@
         <br>
         <br>
         <div class="centered">
-            <input type="submit" value="Посоветовать">
+            <input type="submit" value="Подобрать">
         </div>
 
     </form>
 
+    <br>
+    <br>
+
     {% if stp %}
         <table class="center" cellspacing="2" border="1" cellpadding="5">
             <tr>
-                <th style="width:100px">Предмет</th><th  style="width:450px">Профили</th>
+                <th style="width:200px">Предмет</th><th  style="width:450px">Профили</th>
             </tr>
         {% for s, p in stp.items %}
         <tr>
@@ -222,6 +231,28 @@
         {% endfor %}
         </table>
     {% endif %}
+    <br>
+
+    {% if pts %}
+        <table class="center" cellspacing="2" border="1" cellpadding="5">
+            <tr>
+                <th style="width:200px">Профиль</th><th  style="width:450px">Предметы</th>
+            </tr>
+        {% for p, s in pts.items %}
+        <tr>
+            <td>{{ p }}</td>
+            <td>{{ s }}</td>
+        </tr>
+        {% endfor %}
+        </table>
+    {% endif %}
+
+    <br>
+    <div class="centered">
+        <button name="back"><a href="{% url 'profiles' %}">Перейти к выбору профилей</a></button>
+
+        <button name="back"><a href="{% url 'subjects' %}">Перейти к выбору предметов</a></button>
+    </div>
 
 </body>
 </html>

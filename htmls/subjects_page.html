@@ -69,6 +69,7 @@
     </style>
 </head>
 <body>
+    {% include 'navbar.html' %}
     <form name="he_form" method="post" action="advise">
         {% csrf_token %}
         <fieldset class="fieldset">
@@ -97,7 +98,7 @@
         <br>
 
         <div class="centered">
-        <button name="home"><a href="{% url 'home' %}">Как связаны профили и предметы?</a></button>
+        <button name="conv"><a href="{% url 'profiles_convert' %}">Как связаны профили и предметы?</a></button>
         </div>
 
         <br>

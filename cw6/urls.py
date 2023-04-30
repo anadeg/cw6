@@ -24,12 +24,12 @@ from wa_v1.models import (HomeController,
 
 urlpatterns = [
     path("", HomeController().render_page, name='home'),
-    path("test/", TestController.render_page, name="test"),
+    path("preamble/", TestController.render_preamble, name="preamble"),
+    path("test/", TestController().render_page, name="test"),
     path("select_profiles/", ProfileController.render_page, name='profiles'),
     path("select_subjects/", SubjectController.render_page, name='subjects'),
 
     path("convert", ProfileController.convert, name='profiles_convert'),
-    path("convert", SubjectController.render_page, name='subjects_convert'),
 
     path("test_result", TestController().get_test_result, name="test_result"),
 

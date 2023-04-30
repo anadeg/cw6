@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Test Result</title>
+    <title>Preamble</title>
     <style>
         .centered {
             text-align: center;
-        }
+                    }
         button {
 
             background-color: #4CAF50;
@@ -17,7 +17,7 @@
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
-            width: 300px;
+            width: 200px;
             transition-duration: 0.3s;
                     }
         button:hover {
@@ -42,7 +42,7 @@
             text-decoration: none;
             display: inline-block;
             font-size: 14px;
-            width: 300px;
+            width: 100px;
             transition-duration: 0.3s;
         }
         input[type=submit]:hover {
@@ -52,47 +52,40 @@
         }
         input[type=text], input[type=text]:hover {
             background: rgba(0,0,0,0);
-            width: 300px;
+            width: 200px;
             border: solid green 2px;
 
-        fieldset {
-            width: 300px;
+        .fieldset {
+            width: 350px;
             margin: auto;
-            text-align: left;
         }
     </style>
 </head>
 <body>
     {% include 'navbar.html' %}
-    <div>
-        <h3 class="centered">Ваши профили:</h3>
-
-        <form style="margin:0 auto;width:300px">
-            <fieldset>
-                {% for prof in profiles %}
-                    {{ prof }}
-                    <br>
-                {% endfor %}
-            </fieldset>
-        </form>
-    </div>
 
     <div class="centered">
+        <b>ИНСТРУКЦИЯ</b>
+        <br>
+        <br>
+        <br>
+
+        Вам будут предложены 42 пары профессий.
+        <br>
+        <br>
+        Из каждой пары вам нужно будет выбрать один вариант, который вам больше нравится и лучше всего подходит,
+        <br>
+        но не с точки зрения престижности, а с точки зрения содержания работы и вашего отношения к тому, что необходимо делать.
+        <br>
+        <br>
+        Вам нужно определить, можете ли вы успешно заниматься данным видом деятельности и хотите ли вы этим заниматься.
+
+        <br>
         <br>
         <br>
         <button>
-          <a href="{% url 'dorm_city' %}">Подобрать ВУЗ</a>
+            <a href="{% url 'test' %}">Начать</a>
         </button>
-    </div>
-    <br>
-
-    <div class="centered">
-        <button name="back"><a href="{% url 'profiles' %}">Перейти к выбору профилей</a></button>
-    </div>
-    <br>
-
-    <div class="centered">
-        <button name="back"><a href="{% url 'subjects' %}">Перейти к выбору предметов</a></button>
     </div>
 
 </body>
